@@ -43,8 +43,8 @@
 <script setup>
 
 
-  const username = ref('admin@test.com')
-  const password = ref('password')
+  const username = ref('')
+  const password = ref('')
 
   const login = async () => {
     useUserStore().login(username.value, password.value)
@@ -56,6 +56,7 @@
     } else {
       username.value = 'customer@test.com'
     }
+    password.value = 'password'
   }
 
 </script>
