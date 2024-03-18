@@ -1,0 +1,75 @@
+version: "3.8"
+services:
+
+  turno_code_test_app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: turno_code_test
+    container_name: turno_code_test_app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ../../server:/var/www
+    networks:
+      - turno_code_test
+    links:
+      - turno_code_test_mysql
+      - turno_code_test_redis
+    depends_on:
+      - turno_code_test_mysql
+      - turno_code_test_redis
+
+  turno_code_test_redis:
+    container_name: turno_code_test_redis
+    image: redis:7.0.0
+    restart: always
+    command: redis-server --requirepass 123123
+    ports:
+      - "6379:6379"
+    networks:
+    - turno_code_test
+
+  turno_code_test_mysql:
+    image: mysql:8.3.0
+    container_name: turno_code_test_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: turno_code_test_mysql
+      MYSQL_USER: turno_code_test_mysql
+      MYSQL_ROOT_PASSWORD: turno_code_test_mysql
+      MYSQL_PASSWORD: turno_code_test_mysql
+      SERVICE_TAGS: dev
+      SERVICE_NAME: turno_code_test_mysql
+    volumes:
+      - ../../docker_volumes/turno_code_test_database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - turno_code_test
+
+  turno_code_test_nginx:
+    image: nginx:alpine
+    container_name: turno_code_test_nginx
+    build:
+      context: ./
+      dockerfile: nginx/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3080:80"
+      - "8000:443"
+    volumes:
+      - ../../server:/var/www
+      - ./nginx/conf:/etc/nginx/conf.d/
+      - ../../docker_volumes/nginx_logs:/var/log/nginx
+    networks:
+      - turno_code_test
+    links:
+      - turno_code_test_app
+    depends_on:
+      - turno_code_test_app
+
+networks:
+  turno_code_test:
+    driver: bridge
+
