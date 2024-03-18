@@ -87,7 +87,7 @@ export default class StatementForm extends BaseForm {
       this.isLoading = true
       this.checkFormErrors()
 
-      if(useBalanceStore().available < this.value) {
+      if(this.type !== 'check' && useBalanceStore().available < this.value) {
         useToast({ type: 'error', message: `You don't have enough money to buy it.`})
         throw new Error('Unsuficient balance.')
       }
