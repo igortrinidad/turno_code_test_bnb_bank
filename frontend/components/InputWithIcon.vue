@@ -19,7 +19,6 @@
             :class="getInputClass"
             :disabled="disabled"
             :options="getVueNumberFormatOptions"
-            @input="onChange($event.target.value)"
             @keydown.enter="onKeyDownEnter($event.target.value)"
             @blur="onBlur($event.target.value)"
             @focus="onFocus($event.target.value)"

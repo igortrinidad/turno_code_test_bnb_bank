@@ -1,19 +1,17 @@
 <template>
   <input
-    :value="formattedValue"
+    v-model="childValue"
     inputmode="numeric"
-    @input="onInput($event)"
-    @focus="onFocus($event)"
+    @focus="onFocus"
   >
 </template>
 
-<script>
+<script setup>
 
-import { format, unformat, setCursor, setCursorPosition, defaultOptions } from '@/util/vueNumberFormat'
+  import { setCursor, defaultOptions } from '@/util/vueNumberFormat'
+  import { NumberFormat } from '@igortrindade/lazyfy'
 
-export default {
-  name: 'CurrencyInput',
-  props: {
+  const props = defineProps({
     value: {
       type: [String, Number],
       default: null
@@ -22,41 +20,29 @@ export default {
       type: Object,
       default: () => {},
     }
-  },
-  emits: ['update:value'],
-  computed: {
-    mergedOptions() {
-      const options = defaultOptions
-      if(this.options) {
-        return Object.assign({}, options, this.options)
-      }
-      return options
+  })
+
+  const options = props.options || {}
+
+  const emit = defineEmits(['update:value'])
+
+  const mergedOptions = computed(() => {
+    return { ...defaultOptions, ...options }
+  })
+
+  const childValue = computed({
+    get: () => {
+      return NumberFormat.formatNumber(props.value, mergedOptions.value)
     },
-    formattedValue() {
-      return format(this.value, this.mergedOptions)
+    set: (value) => {
+      const newValue = NumberFormat.unformatNumber(value, mergedOptions.value)
+      emit('update:value', newValue)
     }
-  },
+  })
 
-  created() {
-    if(!this.$vueNumberFormatOptions) this.$vueNumberFormatOptions = defaultOptions
-  },
-
-  methods: {
-
-    onFocus($event) {
-      setCursor($event.target, ($event.target.value.length - this.mergedOptions.suffix.length))
-    },
-
-    onInput($event) {
-      setCursorPosition($event.target, this.mergedOptions)
-      const value = unformat($event.target.value, this.mergedOptions)
-      this.updateValue(value)
-    },
-
-    updateValue(value) {
-      this.$emit('update:value', value)
-    }
-
+  const onFocus = ($event) => {
+    setCursor($event.target, ($event.target.value.length - mergedOptions.value.suffix.length))
   }
-}
+
+
 </script>
