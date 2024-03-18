@@ -5,10 +5,10 @@
 This application shows a small portion of my habilities to create modern web applications using Vue3 (Nuxt.js) and Laravel.
 
 ### /frontend
-Inside this directory lies a conventional Nuxt.js (Vue3) application, showcasing the frontend aspect of the project. All designs are custom made components using TailwindCSS.
+Inside this directory lies a conventional Nuxt.js (Vue3) application, showcasing the frontend aspect of the project. All designs are custom made components using TailwindCSS and the frontend is server by Vercel.
 
 ### /server
-Contained within this folder is a freshly minted Laravel 11x application. I've meticulously restructured the folder layout to adhere to the Domain-Driven Design (DDD) pattern. Navigate through the 'modules' folder to discover tailored resources catering to distinct user types and functionalities.
+Contained within this folder is a freshly minted Laravel 11x application. I've meticulously restructured the folder layout to adhere to the Domain-Driven Design (DDD) pattern. Navigate through the 'modules' folder to discover tailored resources catering to distinct user types and functionalities. The backend is hosted in DigitalOcean using the Apps platform (to keep it simple) - check it out the Dockerfile under the root folder to see the backend build structure.
 
 ### /docker
 If you're like me and prefer to run backend resources (databases, api's and so on) on Docker, this folder has everything you gonna need to startup your application as quickly as possible for your development environemnt.
