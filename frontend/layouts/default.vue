@@ -36,7 +36,7 @@
       </p>
 
       <div class="w-full flex justify-center items-center text-4xl">
-        <NuxtLink to="https://github.com/igortrinidad/turno_code_test_banking" target="_blank">
+        <NuxtLink to="https://github.com/igortrinidad/turno_code_test_bnb_bank" target="_blank">
           <Icon name="mdi:github" />
         </NuxtLink>
       </div>
