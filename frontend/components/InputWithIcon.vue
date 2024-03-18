@@ -9,7 +9,7 @@
       </div>
 
       <div class="relative">
-          <VueNumberFormat
+          <CurrencyInput
             v-if="money"
             :id="id_input"
             v-model:value="childValue"
@@ -68,7 +68,6 @@
 </template>
 
 <script setup>
-  import VueNumberFormat from '@igortrindade/vue-number-format'
 
   const props = defineProps({
     type: {
