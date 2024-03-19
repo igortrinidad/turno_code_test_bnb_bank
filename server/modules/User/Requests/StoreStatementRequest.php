@@ -14,11 +14,20 @@ class StoreStatementRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'value' => 'required',
+        // Default rules
+        $rules = [
             'description' => 'required',
             'type' => 'required',
         ];
+
+        if ($this->input('type') === 'purchase') {
+            $rules['value'] = 'required|numeric|max:0';
+        } else {
+            $rules['value'] = 'required|numeric';
+        }
+
+        return $rules;
     }
+
     
 }

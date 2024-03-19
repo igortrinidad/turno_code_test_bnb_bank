@@ -38,7 +38,7 @@ class StatementController extends Controller
     }
 
 
-    public function store(Request $request) 
+    public function store(StoreStatementRequest $request) 
     {
 
         $statement = new Statement();

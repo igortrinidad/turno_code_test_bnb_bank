@@ -45,6 +45,18 @@ class StatementTest extends TestCase
     }
 
     /**
+     * It should fail create a statement without token
+     */
+    public function test_fail_create_statement_using_positive_values(): void
+    {
+        
+        $response = $this->create_statement('Starbucks', 15000, 'purchase');
+
+        $response->assertStatus(422);
+
+    }
+
+    /**
      * It should fail update a statement - just admins can update statements
      */
     public function test_fail_update_statement_from_non_admin_users(): void
